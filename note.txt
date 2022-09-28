@@ -1,0 +1,7 @@
+To create the nodeJS project 
+
+1) npm init -y 
+    - gives us the package.json allowing us to install other libraries 
+2) npm i --save-dev nodemon
+    - allow the server to update whenever there is a change to server.js 
+    - without this we'll have to keep restarting the server through command line
