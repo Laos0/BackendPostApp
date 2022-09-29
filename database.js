@@ -26,6 +26,7 @@ export async function getUsers(){
     return users;
 }
 
+
 export async function getUserDetailsByEmail(email){
     const [users] = await pool.query(`SELECT * FROM user WHERE email="${email}"`);
     return users;

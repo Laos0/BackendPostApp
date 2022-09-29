@@ -5,6 +5,7 @@ export class UserDetails{
     email;
     password;
     isCreated = true;
+    isLoggedIn = false;
 
     constructor(firstName, lastName, email, password){
         this.firstName = firstName;
@@ -12,4 +13,6 @@ export class UserDetails{
         this.email = email;
         this.password = password;
     }
+
+   
 }

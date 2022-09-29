@@ -1,5 +1,6 @@
 import * as database from '../database.js';
 import express from 'express';
+import { UserDetails } from '../responses/UserDetails.js';
 
 export const router = express.Router();
 
@@ -15,8 +16,15 @@ router.post('/login', async (req, res) => {
     const isLoggedIn = await database.login(req.body.email, req.body.password);
 
     if(isLoggedIn){
-        console.log("logged in"); 
-        res.send('{"isLoggedIn":true}');
+
+        let user = await database.getUserDetailsByEmail(req.body.email); 
+        
+        let userDetails = new UserDetails(user[0].firstName, user[0].lastName, user[0].email, user[0].password);
+        userDetails.isLoggedIn = true;
+        res.send(JSON.stringify(userDetails));
+
+        console.log(user[0].email + ": logged in"); 
+        //res.send('{"isLoggedIn":true}');
     }else{
         res.send('{"isLoggedIn":false}');
         console.log("Fail to log in")

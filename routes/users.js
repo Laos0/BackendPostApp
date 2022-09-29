@@ -26,9 +26,10 @@ router.get('/:id', (req, res) => {
     res.send(`Get User With ID ${req.params.id}`);
 });
 
-// add a new user
+// add/create a new user
 router.post('/new', async (req, res) => {
 
+    // the request comes with email and password
     let rq = req.body;
 
     // Angular will send data from the forms to the backend
@@ -39,6 +40,7 @@ router.post('/new', async (req, res) => {
         // get the userDetails
 
         let userDetail = new UserDetails(rq.firstName, rq.lastName, rq.email, rq.password);
+        userDetail.isLoggedIn = true; // set it to true
         res.status(200).send(JSON.stringify(userDetail));
     }else{
         res.status(400).send('{"message":"Unsuccessful Creation"}')
