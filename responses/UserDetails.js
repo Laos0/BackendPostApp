@@ -1,5 +1,6 @@
 export class UserDetails{
 
+    id;
     firstName;
     lastName;
     email;
@@ -7,7 +8,8 @@ export class UserDetails{
     isCreated = true;
     isLoggedIn = false;
 
-    constructor(firstName, lastName, email, password){
+    constructor(id, firstName, lastName, email, password){
+        this,id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

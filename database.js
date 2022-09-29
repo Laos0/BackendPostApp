@@ -26,6 +26,13 @@ export async function getUsers(){
     return users;
 }
 
+export async function getUserIdByEmail(email){ 
+    // the [users] will return only the first item in the array 
+    // without it, we will get the users and all unnecessary meta data 
+    const [userId] = await pool.query(`SELECT id FROM user WHERE email="${email}"`);
+    return userId[0].id;
+}
+
 
 export async function getUserDetailsByEmail(email){
     const [users] = await pool.query(`SELECT * FROM user WHERE email="${email}"`);
@@ -86,4 +93,16 @@ export async function login(email, password){
         return false;
     }
 
+}
+
+// TODO: Frontend will send the user's information
+// Intercept the data and store it
+export async function post(userId, title, text, views){
+    const sql = `INSERT INTO post (userId, title, text, views)
+    VALUES (?, ?, ?, ?)`;
+
+    const [result] = await pool.query(sql, 
+        [userId, title, text, views]);
+
+    console.log("<< POST COMPLETED >> ", result);
 }

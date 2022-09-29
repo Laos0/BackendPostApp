@@ -25,6 +25,8 @@ router.post('/login', async (req, res) => {
         console.log("<< auth.js >>", user[0]); 
 
         userDetails.isLoggedIn = true;
+        userDetails.id = await database.getUserIdByEmail(req.body.email);
+        console.log("<< user ID >>", userDetails.id)
         res.send(JSON.stringify(userDetails));
 
         console.log("<< auth.js >>", userDetails.firstName + ": logged in"); 
