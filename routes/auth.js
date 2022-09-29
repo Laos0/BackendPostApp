@@ -19,11 +19,15 @@ router.post('/login', async (req, res) => {
 
         let user = await database.getUserDetailsByEmail(req.body.email); 
         
-        let userDetails = new UserDetails(user[0].firstName, user[0].lastName, user[0].email, user[0].password);
+        // when extracting data, make sure to spell the fields correctly like it was in the backend: 
+        // ex: data table user's field: first_name, last_name...
+        let userDetails = new UserDetails(user[0].first_name, user[0].last_name, user[0].email, user[0].password);
+        console.log("<< auth.js >>", user[0]); 
+
         userDetails.isLoggedIn = true;
         res.send(JSON.stringify(userDetails));
 
-        console.log(user[0].email + ": logged in"); 
+        console.log("<< auth.js >>", userDetails.firstName + ": logged in"); 
         //res.send('{"isLoggedIn":true}');
     }else{
         res.send('{"isLoggedIn":false}');
