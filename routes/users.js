@@ -9,6 +9,7 @@
 
 import * as database from '../database.js';
 import express from 'express';
+import { UserDetails } from '../responses/UserDetails.js';
 
 export const router = express.Router();
 
@@ -29,12 +30,22 @@ router.get('/:id', (req, res) => {
 router.post('/new', async (req, res) => {
 
     let rq = req.body;
-    // 
-    //const result = await database.createUser(rq.firstName, rq.lastName, rq.email, rq.password); 
 
+    // Angular will send data from the forms to the backend
+    const result = await database.createUser(rq.firstName, rq.lastName, rq.email, rq.password); 
 
-    const result = await database.createUser("man", "woman", "manwoman@gmail.com", "abcdefg1");
-    console.log(result);
+    // if result is not null
+    if(result){
+        // get the userDetails
+
+        let userDetail = new UserDetails(rq.firstName, rq.lastName, rq.email, rq.password);
+        res.status(200).send(JSON.stringify(userDetail));
+    }else{
+        res.status(400).send('{"message":"Unsuccessful Creation"}')
+    }
+
+    //const result = await database.createUser("man", "woman", "manwoman@gmail.com", "abcdefg1");
+    console.log("<< users.js >> ", rq);
 });
 
 /* without "type": "Module" in package.json

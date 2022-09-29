@@ -38,8 +38,8 @@ app.use(express.json())
     app.get('/users')
     app.post('/users/new')
 */
-app.use(apiPaths.API_USER_V1, userRouter); // path: http://localhost:8080/api/v1/users
-app.use(apiPaths.API_LOGIN_V1, authRouter); // path: http://localhost:8080/api/v1/auth
+app.use(apiPaths.API_USER_V1, userRouter); // starting path: http://localhost:8080/api/v1/users
+app.use(apiPaths.API_LOGIN_V1, authRouter); // starting path: http://localhost:8080/api/v1/auth
 
 
 app.use((err, req, res, next) => {

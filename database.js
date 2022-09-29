@@ -26,16 +26,31 @@ export async function getUsers(){
     return users;
 }
 
-export async function createUser(firstName, lastName, email, password){
-    const result = await pool.query(`
-        INSERT INTO user (first_name, last_name, email, password)
-        VALUES (?, ?, ?, ?)`, 
-        [firstName, lastName, email, password])
-        return result;
+export async function getUserDetailsByEmail(email){
+    const [users] = await pool.query(`SELECT * FROM user WHERE email="${email}"`);
+    return users;
 }
 
-export async function login(email, password){
+export async function createUser(firstName, lastName, email, password){
 
+    const sql = `INSERT INTO user (first_name, last_name, email, password)
+    VALUES (?, ?, ?, ?)`;
+
+    try{
+
+        // no need to include the id because it is set to auto_increment on mysql database
+        const [result] = await pool.query(sql, 
+            [firstName, lastName, email, password]);
+        console.log("<< After creating user >>", result);
+            return result;
+
+    }catch(e){
+        return false;
+    }
+}
+
+// gets the email and password from our auth router in auth.js
+export async function login(email, password){
 
     const sql = `SELECT password FROM user WHERE email="${email}"`;
 
@@ -48,10 +63,11 @@ export async function login(email, password){
 
     }catch(e){
         // when there is an error on the query
-        console.log("invalid query")
+        console.log("invalid query");
         return false
     }
 
+    // check to make sure pass is not empty
     if(pass[0]){
         
         if(password === pass[0].password){
@@ -62,14 +78,10 @@ export async function login(email, password){
         } 
 
     }else{
+        // if password is not assigned through query then 
+        // there is no match for email
         console.log("Email does not exist")
         return false;
     }
-
-    
-
-
-    // this is how you extract data value from a json object
-   //console.log(pass[0].password);
 
 }
