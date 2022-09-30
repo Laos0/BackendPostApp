@@ -39,9 +39,11 @@ router.post('/new', async (req, res) => {
     if(result){
         // get the userDetails
 
-        let userDetail = new UserDetails(rq.firstName, rq.lastName, rq.email, rq.password);
+        let userDetail = new UserDetails(0, rq.firstName, rq.lastName, rq.email, rq.password);
         userDetail.isLoggedIn = true; // set it to true
         userDetail.id = await database.getUserIdByEmail(rq.email);
+
+        console.log("<< creating new user:  >>", userDetail);
         res.status(200).send(JSON.stringify(userDetail));
     }else{
         res.status(400).send('{"message":"Unsuccessful Creation"}')
