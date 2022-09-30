@@ -26,3 +26,11 @@ router.get('/all', async (req, res) => {
     let posts = await database.getAllPosts();
     res.send(posts);
 });
+
+router.post('/id/addViews', async (req, res) => {
+
+    let result = await database.updatePostViews(req.body);
+    res.send({"message": "view count increased"});
+    console.log(req.body);
+    console.log("adding views")
+});

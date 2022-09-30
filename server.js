@@ -41,7 +41,7 @@ app.use(express.json())
 */
 app.use(apiPaths.API_USER_V1, userRouter); // starting path: http://localhost:8080/api/v1/users
 app.use(apiPaths.API_LOGIN_V1, authRouter); // starting path: http://localhost:8080/api/v1/auth
-app.use(apiPaths.API_POST_V1, postRouter); // starting path: http://localhost:8080/api/v1/post
+app.use(apiPaths.API_POST_V1, postRouter); // starting path: http://localhost:8080/api/v1/posts
 
 
 app.use((err, req, res, next) => {

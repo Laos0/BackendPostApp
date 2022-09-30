@@ -31,6 +31,13 @@ export async function getAllPosts(){
     return posts;
 }
 
+// TODO: FINISH THIS METHOD NEED POST INFORMATION FROM FRONT END
+export async function updatePostViews(post){
+    const [updatePost] = await pool.query(`UPDATE post SET views = views + 1 WHERE post.id=${post.id}`);
+    return updatePost;
+    //console.log(updatePost);
+}
+
 export async function getUserIdByEmail(email){ 
     // the [users] will return only the first item in the array 
     // without it, we will get the users and all unnecessary meta data 
