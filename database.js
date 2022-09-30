@@ -45,6 +45,7 @@ export async function getUserDetailsByEmail(email){
     return users;
 }
 
+// sql to insert a new user
 export async function createUser(firstName, lastName, email, password){
 
     const sql = `INSERT INTO user (first_name, last_name, email, password)
