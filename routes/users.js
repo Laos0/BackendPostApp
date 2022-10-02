@@ -22,8 +22,11 @@ router.get('/', async (req, res) => {
 });
 
 // return specific user based on id
-router.get('/:id', (req, res) => {
-    res.send(`Get User With ID ${req.params.id}`);
+router.get('/:id', async(req, res) => {
+    const user = await database.getUserDetailsById(req.params.id);
+    console.log("HITTING BACKEND FOR GET USERID", user);
+    res.send(user[0]);
+    //res.send(`Get User With ID ${req.params.id}`);
 });
 
 // add/create a new user

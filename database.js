@@ -31,11 +31,16 @@ export async function getAllPosts(){
     return posts;
 }
 
-// TODO: FINISH THIS METHOD NEED POST INFORMATION FROM FRONT END
 export async function updatePostViews(post){
     const [updatePost] = await pool.query(`UPDATE post SET views = views + 1 WHERE post.id=${post.id}`);
     return updatePost;
     //console.log(updatePost);
+}
+
+export async function getUserDetailsById(id){
+    const [user] = await pool.query(`SELECT * FROM user WHERE id=${id}`);
+    console.log("THIS IS THE USER:", user[0]);
+    return user;
 }
 
 export async function getUserIdByEmail(email){ 
