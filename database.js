@@ -26,6 +26,12 @@ export async function getUsers(){
     return users;
 }
 
+// TODO: FINISH editPOstId
+export async function editPostById(post){
+    const [editPost] = await pool.query(`UPDATE post SET post.title="${post.title}", post.text="${post.text}" WHERE post.id=${post.id}`);
+    return editPost;
+}
+
 // this is how you delete a single row on table
 export async function deletePostById(postId){
     const [post] = await pool.query(`DELETE FROM post WHERE post.id=${postId}`);

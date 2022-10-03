@@ -41,3 +41,9 @@ router.delete('/:id/delete', async (req, res) => {
     res.send({some: 'json'});
 
 });
+
+router.put('/:id/edit', async (req, res) => {
+    console.log("Editing post....", req.body);
+    let result = await database.editPostById(req.body);
+    res.send({message: true});
+})
