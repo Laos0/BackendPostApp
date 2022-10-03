@@ -26,6 +26,12 @@ export async function getUsers(){
     return users;
 }
 
+// this is how you delete a single row on table
+export async function deletePostById(postId){
+    const [post] = await pool.query(`DELETE FROM post WHERE post.id=${postId}`);
+    return post;
+}
+
 export async function getAllPosts(){
     const [posts] = await pool.query("SELECT * FROM post");
     return posts;

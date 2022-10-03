@@ -34,3 +34,10 @@ router.post('/id/addViews', async (req, res) => {
     console.log(req.body);
     console.log("adding views")
 });
+
+router.delete('/:id/delete', async (req, res) => {
+    console.log("Deleting post of id: ", req.params.id);
+    let result = await database.deletePostById(req.params.id);
+    res.send({some: 'json'});
+
+});
