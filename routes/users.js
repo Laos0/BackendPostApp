@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 // return specific user based on id
 router.get('/:id', async(req, res) => {
     const user = await database.getUserDetailsById(req.params.id);
-    console.log("HITTING BACKEND FOR GET USERID", user);
+    //console.log("HITTING BACKEND FOR GET USERID", user);
     res.send(user[0]);
     //res.send(`Get User With ID ${req.params.id}`);
 });
@@ -46,14 +46,14 @@ router.post('/new', async (req, res) => {
         userDetail.isLoggedIn = true; // set it to true
         userDetail.id = await database.getUserIdByEmail(rq.email);
 
-        console.log("<< creating new user:  >>", userDetail);
+        //console.log("<< creating new user:  >>", userDetail);
         res.status(200).send(JSON.stringify(userDetail));
     }else{
         res.status(400).send('{"message":"Unsuccessful Creation"}')
     }
 
     //const result = await database.createUser("man", "woman", "manwoman@gmail.com", "abcdefg1");
-    console.log("<< users.js >> ", rq);
+    //console.log("<< users.js >> ", rq);
 });
 
 /* without "type": "Module" in package.json

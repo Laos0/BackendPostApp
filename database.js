@@ -51,8 +51,66 @@ export async function updatePostViews(post){
 
 export async function getUserDetailsById(id){
     const [user] = await pool.query(`SELECT * FROM user WHERE id=${id}`);
-    console.log("THIS IS THE USER:", user[0]);
+    //console.log("THIS IS THE USER:", user[0]);
     return user;
+}
+
+export async function getAllCommentInPost(post){
+    console.log("START HERE -=----------------------");
+
+
+    const [comments] = await pool.query(`SELECT * FROM comment WHERE comment.postId=${post.id}`)
+
+    if(comments && comments.length < 1){
+        return [];
+    }
+    const commentArray = [];
+    comments.forEach((c) => {
+        
+        const myData = {
+            id: c.id,
+            userId: c.userId,
+            postId: c.postId,
+            text: c.text,
+            createdDate: c.createdDate,
+            userName: '' // first name and last name concat 
+        }
+        
+        commentArray.push(myData);
+        
+    });
+    console.log("<< comments >>", comments);
+
+    const allCommentsUserId = commentArray.map((c) => {
+        return c.userId;
+    });
+
+    console.log("<< allCommentsUserId >>", allCommentsUserId);
+
+    const uniqueUserId = new Set();
+    allCommentsUserId.forEach((c) => {
+        uniqueUserId.add(c);
+    });
+
+    const uniqueUserIdArray =  Array.from(uniqueUserId);
+    console.log("<< uniqueUserIdArray >>", uniqueUserIdArray);
+    
+    
+        const uniqueUserIdString = uniqueUserIdArray.join(',', uniqueUserIdArray);
+
+        console.log("<< uniqueUserIdString >>", uniqueUserIdString);
+    const [users] = await pool.query(`SELECT * FROM user WHERE user.id IN(${uniqueUserIdString})`);
+
+    commentArray.forEach((c) => {
+        const selectedUser = users.filter((user) => {
+            return c.userId === user.id
+        })[0];
+
+        c.userName = selectedUser.first_name + " " + selectedUser.last_name;
+    })
+
+    // console.log(commentArray);
+     return commentArray;
 }
 
 export async function getUserIdByEmail(email){ 
