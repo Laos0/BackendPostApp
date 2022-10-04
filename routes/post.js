@@ -15,6 +15,17 @@ router.post('/:id/comment', async (req, res) => {
     //console.log(result);
 })
 
+router.post('/:id/comments/new', async (req, res) => {
+    const result = await database.addNewCommentToPost(req.body);
+    if(result){
+        res.send({"isCommentCreated": result});
+    }else{
+        res.send({"isCommentCreated": result});
+    }
+
+    console.log(req.body);
+})
+
 // Frontend will call this endpoint and send in the userId, title, textField, and views
 router.post('/new', async (req, res) => {
     //console.log("<< post.js >> ", req.body);

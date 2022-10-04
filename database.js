@@ -26,7 +26,6 @@ export async function getUsers(){
     return users;
 }
 
-// TODO: FINISH editPOstId
 export async function editPostById(post){
     const [editPost] = await pool.query(`UPDATE post SET post.title="${post.title}", post.text="${post.text}" WHERE post.id=${post.id}`);
     return editPost;
@@ -53,6 +52,20 @@ export async function getUserDetailsById(id){
     const [user] = await pool.query(`SELECT * FROM user WHERE id=${id}`);
     //console.log("THIS IS THE USER:", user[0]);
     return user;
+}
+
+export async function addNewCommentToPost(comment){
+    const sql = `INSERT INTO comment (userId, postId, text)
+    VALUES (?, ?, ?)`;
+    
+    const [result] = await pool.query(sql, 
+        [comment.userId, comment.postId, comment.text]);
+
+    if(result.length > 0){
+        return true;
+    }
+
+    return false;
 }
 
 export async function getAllCommentInPost(post){
