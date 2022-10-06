@@ -38,7 +38,7 @@ export async function deletePostById(postId){
 }
 
 export async function getAllPosts(){
-    const [posts] = await pool.query("SELECT * FROM post");
+    const [posts] = await pool.query("SELECT * FROM post INNER JOIN user ON post.userId = user.id");
     return posts;
 }
 
