@@ -45,11 +45,11 @@ router.get('/all', async (req, res) => {
 });
 
 router.post('/id/addViews', async (req, res) => {
-
+    console.log(req.body);
     let result = await database.updatePostViews(req.body);
     res.send({"message": "view count increased"});
     //console.log(req.body);
-    //console.log("adding views")
+    console.log("adding views")
 });
 
 router.delete('/:id/delete', async (req, res) => {

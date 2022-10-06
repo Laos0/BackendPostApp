@@ -38,14 +38,15 @@ export async function deletePostById(postId){
 }
 
 export async function getAllPosts(){
-    const [posts] = await pool.query("SELECT * FROM post INNER JOIN user ON post.userId = user.id");
+    const [posts] = await pool.query("SELECT post.id, post.userId, post.title, post.text, post.views, post.createdDate, user.first_name, user.last_name FROM post INNER JOIN user ON post.userId = user.id");
     return posts;
 }
 
 export async function updatePostViews(post){
+
+    console.log(post);
     const [updatePost] = await pool.query(`UPDATE post SET views = views + 1 WHERE post.id=${post.id}`);
     return updatePost;
-    //console.log(updatePost);
 }
 
 export async function getUserDetailsById(id){
@@ -69,7 +70,7 @@ export async function addNewCommentToPost(comment){
 }
 
 export async function getAllCommentInPost(post){
-    console.log("START HERE -=----------------------");
+    //console.log("START HERE -=----------------------");
 
 
     const [comments] = await pool.query(`SELECT * FROM comment WHERE comment.postId=${post.id}`)
@@ -92,13 +93,13 @@ export async function getAllCommentInPost(post){
         commentArray.push(myData);
         
     });
-    console.log("<< comments >>", comments);
+    //console.log("<< comments >>", comments);
 
     const allCommentsUserId = commentArray.map((c) => {
         return c.userId;
     });
 
-    console.log("<< allCommentsUserId >>", allCommentsUserId);
+    //console.log("<< allCommentsUserId >>", allCommentsUserId);
 
     const uniqueUserId = new Set();
     allCommentsUserId.forEach((c) => {
@@ -106,7 +107,7 @@ export async function getAllCommentInPost(post){
     });
 
     const uniqueUserIdArray =  Array.from(uniqueUserId);
-    console.log("<< uniqueUserIdArray >>", uniqueUserIdArray);
+   //console.log("<< uniqueUserIdArray >>", uniqueUserIdArray);
     
     
         const uniqueUserIdString = uniqueUserIdArray.join(',', uniqueUserIdArray);
