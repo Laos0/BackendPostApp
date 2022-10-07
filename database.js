@@ -149,7 +149,6 @@ export async function createUser(firstName, lastName, email, password){
     VALUES (?, ?, ?, ?)`;
 
     try{
-
         // no need to include the id because it is set to auto_increment on mysql database
         const [result] = await pool.query(sql, 
             [firstName, lastName, email, password]);
@@ -157,6 +156,8 @@ export async function createUser(firstName, lastName, email, password){
             return result;
 
     }catch(e){
+        // if the email already exists then
+        console.log("Email exists already")
         return false;
     }
 }

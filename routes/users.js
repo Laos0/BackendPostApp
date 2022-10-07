@@ -37,6 +37,7 @@ router.post('/new', async (req, res) => {
 
     // Angular will send data from the forms to the backend
     const result = await database.createUser(rq.firstName, rq.lastName, rq.email, rq.password); 
+    console.log("<< THIS IS THE RESULT OF CREATING USER >>", result)
 
     // if result is not null
     if(result){
