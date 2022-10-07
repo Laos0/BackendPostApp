@@ -4,6 +4,7 @@
 import mysql from 'mysql2';
 import * as dotenv from 'dotenv';
 import {getQueries} from './libs/queries/queries.js'
+import { ResponseLogin } from './responses/ResponseLogin.js';
 dotenv.config();
 
 
@@ -163,6 +164,8 @@ export async function createUser(firstName, lastName, email, password){
 // gets the email and password from our auth router in auth.js
 export async function login(email, password){
 
+    let responseLogin = new ResponseLogin(false,false,false,false);
+    
     const sql = `SELECT password FROM user WHERE email="${email}"`;
 
     let pass;
@@ -175,24 +178,29 @@ export async function login(email, password){
     }catch(e){
         // when there is an error on the query
         console.log("invalid query");
-        return false
+
+        return responseLogin;
     }
 
     // check to make sure pass is not empty
     if(pass[0]){
         
         if(password === pass[0].password){
-            return true;
+            responseLogin.loginSuccessful();
+            //console.log(responseLogin)
+            return responseLogin;
         }else{
             console.log("password does not match")
-            return false;
+            responseLogin.passwordIncorrect();
+            return responseLogin;
         } 
 
     }else{
         // if password is not assigned through query then 
         // there is no match for email
         console.log("Email does not exist")
-        return false;
+        responseLogin.emailDoesNotExist();
+        return responseLogin;
     }
 
 }

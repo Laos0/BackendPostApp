@@ -1,3 +1,4 @@
+
 export class UserDetails{
 
     id;
@@ -6,14 +7,21 @@ export class UserDetails{
     email;
     password;
     isCreated = true;
-    isLoggedIn = false;
+    isLoggedIn;
+    emailExist;
+    passwordMatch;
+    isQueryGood;
 
-    constructor(id, firstName, lastName, email, password){
+    constructor(id, firstName, lastName, email, password, isLoggedIn, emailExist, passwordMatch, isQueryGood){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.isLoggedIn = isLoggedIn;
+        this.emailExist = emailExist;
+        this.passwordMatch = passwordMatch;
+        this.isQueryGood = isQueryGood;
     }
 
    
