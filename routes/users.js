@@ -39,13 +39,14 @@ router.post('/new', async (req, res) => {
     const result = await database.createUser(rq.firstName, rq.lastName, rq.email, rq.password); 
     console.log("<< THIS IS THE RESULT OF CREATING USER >>", result)
 
-    // if result is not null
+    // if result is not null or return false if email exists
     if(result){
         // get the userDetails
 
         let userDetail = new UserDetails(0, rq.firstName, rq.lastName, rq.email, rq.password);
         userDetail.isLoggedIn = true; // set it to true
         userDetail.id = await database.getUserIdByEmail(rq.email);
+        userDetail.emailExist = false;
 
         //console.log("<< creating new user:  >>", userDetail);
         res.status(200).send(JSON.stringify(userDetail));
