@@ -23,7 +23,7 @@ import cors from 'cors';
 */
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080 || 3306;
 app.use(cors());
 
 // a middleware: this will allow us to send json from frontend to here

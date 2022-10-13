@@ -13,6 +13,11 @@ import { UserDetails } from '../responses/UserDetails.js';
 
 export const router = express.Router();
 
+// return all users
+router.get('/hello', async (req, res) => {
+    console.log("HELLO");
+    res.send("HELLO RETURNED FROM SERVER");
+});
 
 // return all users
 router.get('/', async (req, res) => {
