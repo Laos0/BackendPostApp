@@ -28,6 +28,7 @@ app.use(cors());
 
 // a middleware: this will allow us to send json from frontend to here
 // without express.json(), our req.body will be {} 
+// app.use(express.json()) also tells Express to automatically parse JSON request bodies for you
 app.use(express.json())  
 //app.use(express.urlencoded({ extended: false})); 
 
